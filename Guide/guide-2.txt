@@ -1,0 +1,105 @@
+Post Category :-
+
+    1- Schema, 
+
+          const mongoose = require("mongoose");
+
+          const categorySchema = mongoose.Schema({
+            name: {
+              type: String,
+              required: true,
+            },
+            icon: {
+              type: String,
+            },
+            color: {
+              type: String,
+            },
+          });
+
+          exports.Category = mongoose.model("Category", categorySchema);
+
+
+    2- Router,
+
+          router.post("/", async (req, res) => {
+          let category = new Category({
+            name: req.body.name,
+            icon: req.body.icon,
+            color: req.body.color,
+          });
+          if (!category) {
+            res.status(404).json("Error");
+          }
+          category = await category.save();
+          res.send(category);
+        });
+
+
+
+Post Product :- 
+
+    1- Schema, 
+            const mongoose = require("mongoose");
+
+            const productSchema = mongoose.Schema({
+              name: {
+                type: String,
+                required: true,
+              },
+              image: {
+                type: String,
+                default: "",
+              },
+              images: [
+                {
+                  type: String,
+                },
+              ],
+              category: {
+                type: mongoose.Schema.Types.ObjectId,     // مهمة اوى 
+                ref: "Category",                          // مهمة اوى
+                required: true,
+              },
+              countInStock: {
+                type: Number,
+                required: true,
+                min: 0,
+                max: 255,
+              },
+              isFeatured: {
+                type: Boolean,
+                default: false,
+              },
+              dateCreated: {
+                type: Date,
+                default: Date.now,
+              },
+            });
+
+            exports.Product = mongoose.model("Product", productSchema);
+
+
+    2- Router,
+
+        router.post("/", async (req, res) => {
+        const category = await Category.findById(req.body.category);
+        let product = new Product({
+          name: req.body.name,
+          images: req.body.images,
+          countInStock: req.body.countInStock,
+          isFeatured: req.body.isFeatured,
+          dateCreated: req.body.dateCreated,
+          image: req.body.image,
+          category: req.body.category,
+        });
+
+        product = await product.save();
+        res.send(product);
+      });
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Other Methodths in the Router

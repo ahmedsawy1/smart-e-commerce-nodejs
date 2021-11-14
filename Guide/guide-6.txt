@@ -1,0 +1,200 @@
+(1)
+  npm i multer
+  const multer = require("multer");
+
+
+(2) 
+  this 
+    <//>
+        const storage = multer.diskStorage({
+          destination: function (req, file, cb) {
+            cb(null, "public/uploads"); // هنا بيكون الباث الخاص الملف اللى هتحط فيه الصور
+          },
+          filename: function (req, file, cb) {
+            const fileName = file.originalname.split(" ").join("-"); // دى يعنى كل مسافة حط مكانها شرطة
+            cb(null, `${fileName}-${Date.now()}`); // cb >>> callback
+            // كدا انت  بتخلى اسم الملف لما يترفع بيكون باسمه مع الشرطات + كمان رقم مميز بينتج عن طريق التاريخ
+          },
+        });
+    <//>
+
+
+(3)
+  this before the Post function to put it like a param
+      const uploadOptions = multer({ storage: storage }); 
+
+  this in the Params of Post function 
+      router.post(`/`, uploadOptions.single("image"), async (req, res) => {
+
+
+(4) 
+  this to name the file and the path
+      <//>
+        const fileName = req.file.filename; // الاسم اللى جبناه من الفانكشن اللى فوق
+        const basePath = `${req.protocol}://${req.get("host")}/public/uploads`; // دا عشان نقدر نعمل عنوان زى اللى تحت دا
+        //http://localhost:3000/public/uploadsback.jpeg-1617796894265 // back.jpeg دا مثلا لصورة اسمها  
+        // req.protocol = http
+        // req.get("host") = localhost
+      <//>
+  
+  finally you should put the name in the req.body
+      <//>
+        image: `${basePath}${fileName}`,
+        name: req.body.name,
+      <//>
+
+
+
+// The Whole Code Example,
+<//>
+
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
+const { Imagy } = require("../model/image");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads"); // هنا بيكون الباث الخاص الملف اللى هتحط فيه الصور
+  },
+  filename: function (req, file, cb) {
+    const fileName = file.originalname.split(" ").join("-"); // دى يعنى كل مسافة حط مكانها شرطة
+    const extension = FILE_TYPE_MAP[file.mimetype];
+    cb(null, `${fileName}-${Date.now()}.${extension}`);
+  },
+});
+
+const uploadOptions = multer({ storage: storage });
+
+const FILE_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpeg": "jpeg",
+  "image/jpg": "jpg",
+};
+
+router.post("/", uploadOptions.single("image"), async (req, res) => {
+  const fileName = req.file.filename; // الاسم اللى جبناه من الفانكشن اللى فوق
+  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`; // دا عشان نقدر نعمل عنوان زى اللى تحت دا
+  //   const file = req.file;
+  //   const extension = FILE_TYPE_MAP[file.mimetype];
+
+  let newImage = new Imagy({
+    name: req.body.name,
+    image: `${basePath}${fileName}`,
+  });
+
+  newImage = await newImage.save();
+  res.send(newImage);
+});
+
+router.get("/", async (req, res) => {
+  const images = await Imagy.find();
+  res.send(images);
+});
+
+module.exports = router;
+
+
+<//>
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Validate the image      
+
+
+(1) 
+    عشان نحط فيه الامتدادات اللى هنحتاجها
+    const FILE_TYPE_MAP = {
+      "image/png": "png",
+      "image/jpeg": "jpeg",
+      "image/jpg": "jpg",
+    };
+
+
+(2)
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        const isValid = FILE_TYPE_MAP[file.mimetype];
+        let uploadError = new Error("invalid tpye");
+        if (isValid) {
+          uploadError = null;
+        }
+        cb(uploadError, "public/uploads");
+      },
+      filename: function (req, file, cb) {
+        const fileName = file.originalname.split(" ").join("-"); // دى يعنى كل مسافة حط مكانها شرطة
+        const extension = FILE_TYPE_MAP[file.mimetype];
+        cb(null, `${fileName}-${Date.now()}.${extension}`);
+      },
+    });
+
+
+(important) ماذا لو لم يرفع اليوزر أى صورة ؟؟ فى هذه الحالة هنعمل الكود دا   
+
+    put that code i post request function,
+    <//>
+        const file = req.file;
+        if (!file) return res.status(400).send("لازم تحط صورة");
+    <//>
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ازاى نضيف اكتر من صورة .. بص البيست براكتيس كالتالى .. وهى انك تضيف صورة واحدة عادى بس بعد كدا بتعمل تعديل 
+للبروداكت لما يضغط نكست فبالتالى تقدر تعمل تعديل بدل بوست وبالتالى تضيف الصور بالكود دا 
+
+<//>
+
+router.put(
+    '/gallery-images/:id',
+    uploadOptions.array('images', 10),
+    async (req, res) => {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(400).send('Invalid Product Id');
+        }
+        const files = req.files;
+        let imagesPaths = [];
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+
+        if (files) {
+            files.map((file) => {
+                imagesPaths.push(`${basePath}${file.filename}`);
+            });
+        }
+
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                images: imagesPaths,
+            },
+            { new: true }
+        );
+
+        if (!product)
+            return res.status(500).send('the gallery cannot be updated!');
+
+        res.send(product);
+    }
+);
+
+<//>
+
+
+ازاى نخلى رابط الصورة يظهر فى المتصفح للكل عادى
+هما خطوتين اتنين بس 
+
+(1) in regex in "helpers/jwt" 
+
+     { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
+
+بس لو عملت الخطوة الاولى بس هيظهرلك فى المتصفح الايرور دا 
+"Cannot GET /public/uploads/1.jpg-1617903205417.jpeg"
+
+(2) Midleware
+  app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
