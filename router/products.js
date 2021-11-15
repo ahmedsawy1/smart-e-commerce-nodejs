@@ -1,7 +1,7 @@
 const express = require("express");
 const { Catg } = require("../model/catg");
-const { ProductModel } = require("../model/product");
 const { UserModel } = require("../model/user");
+const { ProductModel } = require("../model/product");
 
 const router = express.Router();
 
@@ -22,6 +22,13 @@ router.get("/filter", async (req, res) => {
   if (+req.query.countInStock) {
     prodList = prodList.filter(
       (prod) => prod.countInStock === +req.query.countInStock
+    );
+  }
+
+  if (+req.query.startPrice && +req.query.endPrice) {
+    prodList = prodList.filter(
+      (prod) =>
+        prod.price >= +req.query.startPrice && prod.price <= +req.query.endPrice
     );
   }
 
