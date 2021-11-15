@@ -10,6 +10,24 @@ router.get("/", async (req, res) => {
   res.send(prodList);
 });
 
+router.get("/filter", async (req, res) => {
+  let prodList = await ProductModel.find();
+  // .populate("catg");
+  if (req.query.brand) {
+    prodList = prodList.filter((prod) => prod.brand === req.query.brand);
+  }
+  if (req.query.size) {
+    prodList = prodList.filter((prod) => prod.size === req.query.size);
+  }
+  if (+req.query.countInStock) {
+    prodList = prodList.filter(
+      (prod) => prod.countInStock === +req.query.countInStock
+    );
+  }
+
+  res.send(prodList);
+});
+
 router.post("/:vendorId", async (req, res) => {
   const foundedCatg = await Catg.findOne({ name: req.body.catg });
   const vendor = await UserModel.findById(req.params.vendorId);
@@ -22,6 +40,9 @@ router.post("/:vendorId", async (req, res) => {
     belongTo: vendor.id,
     price: req.body.price,
     details: req.body.details,
+    size: req.body.size,
+    countInStock: req.body.countInStock,
+    brand: req.body.brand,
   });
 
   newProduct = await newProduct.save();

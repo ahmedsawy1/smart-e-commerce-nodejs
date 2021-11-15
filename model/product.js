@@ -19,6 +19,18 @@ const productSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  size: {
+    type: String,
+    required: true,
+  },
+  countInStock: {
+    type: Number,
+    required: true,
+  },
+  brand: {
+    type: String,
+    required: true,
+  },
   details: {
     type: String,
     default: "A good product",
