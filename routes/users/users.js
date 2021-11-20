@@ -2,9 +2,17 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { UserModel } = require("../model/user");
+const { UserModel } = require("../../model/user");
 
 const router = express.Router();
+
+router.get("/", async (req, res) => {
+  const userList = await UserModel.find();
+  if (!userList) {
+    res.send("No Users");
+  }
+  res.send(userList);
+});
 
 router.post("/register", async (req, res) => {
   let newUser = new UserModel({

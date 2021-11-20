@@ -12,6 +12,8 @@ function auth() {
       //   { url: "/api/v1/products", methods: ["GET", "OPTIONS"] },
       //   { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
       `${api}/users/login`,
+      `${api}/users/forget-password`,
+      /\/api\/v1\/users\/reset-password(.*)/,
     ],
   });
 }
