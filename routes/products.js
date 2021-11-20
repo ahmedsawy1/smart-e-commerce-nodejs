@@ -10,9 +10,58 @@ router.get("/", async (req, res) => {
   res.send(prodList);
 });
 
+router.get("/:id", async (req, res) => {
+  const product = await ProductModel.findById(req.params.id);
+  if (!product) {
+    res.send("No Product Found");
+    return;
+  }
+  res.send(product);
+});
+
+router.get("/recentlyAdded", async (req, res) => {
+  const prodList = await ProductModel.find().populate("catg");
+
+  if (!prodList) {
+    res.send("No Products Yes");
+    return;
+  }
+
+  const recAdded = prodList?.sort((a, b) => b.dateCreated - a.dateCreated);
+  res.send(recAdded);
+});
+
+router.get("/bestSeller", async (req, res) => {
+  const prodList = await ProductModel.find().populate("catg");
+
+  if (!prodList) {
+    res.send("No Products Yes");
+    return;
+  }
+
+  const bestSellerProds = prodList?.sort((a, b) => b.sold - a.sold);
+  res.send(bestSellerProds);
+});
+
+router.get("/isFeatured", async (req, res) => {
+  const prodList = await ProductModel.find().populate("catg");
+
+  if (!prodList) {
+    res.send("No Products Yes");
+    return;
+  }
+
+  const isFeaturedProds = prodList?.filter((item) => item.isFeatured === true);
+  res.send(isFeaturedProds);
+});
+
 router.get("/filter", async (req, res) => {
-  let prodList = await ProductModel.find();
-  // .populate("catg");
+  let prodList = await ProductModel.find().populate("catg");
+
+  if (req.query.catg) {
+    prodList = prodList.filter((prod) => prod.catg.name === req.query.catg);
+  }
+
   if (req.query.brand) {
     prodList = prodList.filter((prod) => prod.brand === req.query.brand);
   }
@@ -50,6 +99,8 @@ router.post("/:vendorId", async (req, res) => {
     size: req.body.size,
     countInStock: req.body.countInStock,
     brand: req.body.brand,
+    isFeatured: req.body.isFeatured,
+    // sold: req.body.sold, // to delete it was just for testing
   });
 
   newProduct = await newProduct.save();
