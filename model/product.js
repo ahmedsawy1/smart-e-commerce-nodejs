@@ -19,6 +19,10 @@ const productSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  oldPrice: {
+    type: Number,
+    required: true,
+  },
   size: {
     type: String,
     required: true,
@@ -46,6 +50,14 @@ const productSchema = mongoose.Schema({
     // required: true,
     default: 0,
   },
+  ratings: {
+    type: Number,
+  },
+  comments: [
+    {
+      type: String,
+    },
+  ],
   isFeatured: {
     type: Boolean,
     default: false,
