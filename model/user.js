@@ -33,6 +33,12 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  // favProducts: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "favProducts",
+  //   },
+  // ],
 });
 
 userSchema.virtual("id").get(function () {

@@ -25,6 +25,26 @@ router.get("/", async (req, res) => {
   res.send(prodList);
 });
 
+router.get("/search", async (req, res) => {
+  let searchedProds = await ProductModel.find().populate("catg");
+  if (!searchedProds) {
+    res.send("No Products Found");
+    return;
+  }
+
+  searchedProds = searchedProds.filter((results) => {
+    if (req.query.name === "") {
+      return results;
+    } else if (
+      results.name.toLocaleLowerCase().includes(req.query.name.toLowerCase())
+    ) {
+      return results;
+    }
+  });
+
+  res.send(searchedProds);
+});
+
 router.get("/:id", async (req, res) => {
   const product = await ProductModel.findById(req.params.id);
   if (!product) {
