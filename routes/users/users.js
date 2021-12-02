@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
         userId: user.id,
         isAdmin: user.isAdmin,
       },
-      process.env.Secret,
+      process.env.SECRET,
       {
         expiresIn: "1d", // >> on day
       }

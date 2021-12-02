@@ -3,3 +3,4 @@ node_modules/
 yarn-error.log
 Guide/
 JSON.json
+.DS_Store
