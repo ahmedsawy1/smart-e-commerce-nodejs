@@ -7,6 +7,7 @@ const usersRouter = require("./routes/users/users");
 const resetPassword = require("./routes/users/user-reset-password");
 const ordersRouter = require("./routes/orders/orders");
 const shipingRouter = require("./routes/orders/shiping");
+const paymentRouter = require("./routes/orders/payment");
 
 const auth = require("./helpers/jwt");
 require("dotenv/config");
@@ -29,6 +30,7 @@ app.use(`${api}/catgs`, catgsRouter);
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/orders`, ordersRouter);
 app.use(`${api}/shiping`, shipingRouter);
+app.use(`${api}/payment`, paymentRouter);
 
 mongoose
   .connect(process.env.CONNECT_STRING)

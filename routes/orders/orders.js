@@ -17,7 +17,7 @@ const jwt = require("jsonwebtoken");
 
 router.get(`/`, async (req, res) => {
   const orderList = await OrderModel.find()
-    .populate(["user", "shipingMethod", "orderItems"])
+    .populate(["user", "shipingMethod", "orderItems", "payMethod"])
     .sort({ dateOrdered: -1 });
 
   if (!orderList) {
