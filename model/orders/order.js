@@ -17,6 +17,10 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Shiping",
   },
+  payMethod: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Payment",
+  },
   totalPrice: {
     type: Number,
   },
