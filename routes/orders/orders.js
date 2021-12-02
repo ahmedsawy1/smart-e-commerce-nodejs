@@ -101,6 +101,7 @@ router.put("/:id", async (req, res) => {
     {
       status: req.body.status,
       shipingMethod: req.body.shipingMethod,
+      payMethod: req.body.payMethod,
     },
     { new: true }
   );
