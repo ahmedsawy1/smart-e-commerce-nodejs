@@ -13,6 +13,10 @@ const orderSchema = mongoose.Schema({
     required: true,
     default: "Pending",
   },
+  shipingMethod: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Shiping",
+  },
   totalPrice: {
     type: Number,
   },

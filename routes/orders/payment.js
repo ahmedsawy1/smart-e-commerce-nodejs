@@ -1,24 +1,24 @@
 const express = require("express");
-const { ShipingModel } = require("../../model/orders/shiping");
+const { PaymentModel } = require("../../model/orders/payment");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  let shipingMethods = await ShipingModel.find();
-  res.send(shipingMethods);
+  let payMethods = await PaymentModel.find();
+  res.send(payMethods);
 });
 
 router.post("/", async (req, res) => {
   // Dont forget , Admin only can post shiping methods
 
-  let newShipingMethod = new ShipingModel({
+  let newpaymentMethod = new PaymentModel({
     name: req.body.name,
     type: req.body.type,
-    cost: req.body.cost,
+    tax: req.body.tax,
   });
 
-  newShipingMethod = await newShipingMethod.save();
-  res.send(newShipingMethod);
+  newpaymentMethod = await newpaymentMethod.save();
+  res.send(newpaymentMethod);
 });
 
 module.exports = router;

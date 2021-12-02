@@ -17,7 +17,7 @@ const jwt = require("jsonwebtoken");
 
 router.get(`/`, async (req, res) => {
   const orderList = await OrderModel.find()
-    .populate("user", "name")
+    .populate(["user", "shipingMethod", "orderItems"])
     .sort({ dateOrdered: -1 });
 
   if (!orderList) {
@@ -26,22 +26,30 @@ router.get(`/`, async (req, res) => {
   res.send(orderList);
 });
 
-// router.get(`/:id`, async (req, res) => {
-//   const order = await Order.findById(req.params.id)
-//     .populate("user", "name")
-//     .populate({
-//       path: "orderItems",
-//       populate: {
-//         path: "product",
-//         populate: "category",
-//       },
-//     });
+router.get(`/:id`, async (req, res) => {
+  const order = await OrderModel.findById(req.params.id)
+    // .populate("user", "name")
+    // .populate({
+    //   path: "orderItems",
+    //   populate: {
+    //     path: "product",
+    //     populate: "category",
+    //   },
+    // });
+    .populate("user")
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        populate: "catg",
+      },
+    });
 
-//   if (!order) {
-//     res.status(500).json({ success: false });
-//   }
-//   res.send(order);
-// });
+  if (!order) {
+    res.status(500).json({ success: false });
+  }
+  res.send(order);
+});
 
 router.post("/", async (req, res) => {
   const orderItemsIds = await Promise.all(
@@ -87,19 +95,20 @@ router.post("/", async (req, res) => {
   res.send(order);
 });
 
-// // router.put("/:id", async (req, res) => {
-// //   const order = await Order.findByIdAndUpdate(
-// //     req.params.id,
-// //     {
-// //       status: req.body.status,
-// //     },
-// //     { new: true }
-// //   );
+router.put("/:id", async (req, res) => {
+  const order = await OrderModel.findByIdAndUpdate(
+    req.params.id,
+    {
+      status: req.body.status,
+      shipingMethod: req.body.shipingMethod,
+    },
+    { new: true }
+  );
 
-// //   if (!order) return res.status(400).send("the order cannot be update!");
+  if (!order) return res.status(400).send("the order cannot be update!");
 
-// //   res.send(order);
-// // });
+  res.send(order);
+});
 
 // // router.delete('/:id', (req, res)=>{
 // //     Order.findByIdAndRemove(req.params.id).then(async order =>{
