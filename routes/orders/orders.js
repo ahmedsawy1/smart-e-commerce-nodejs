@@ -3,6 +3,7 @@ const { OrderModel } = require("../../model/orders/order");
 const { OrderItemModel } = require("../../model/orders/orderItem");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const { CuponModel } = require("../../model/orders/cupon");
 
 // const jwt_decode = require("jwt-decode");
 // const token =
@@ -51,6 +52,16 @@ router.get(`/:id`, async (req, res) => {
   res.send(order);
 });
 
+router.post("/cupon", async (req, res) => {
+  let newCupon = new CuponModel({
+    name: req.body.name,
+    val: req.body.val,
+  });
+
+  newCupon = await newCupon.save();
+  res.send(newCupon);
+});
+
 router.post("/", async (req, res) => {
   const orderItemsIds = await Promise.all(
     req.body.orderItems.map(async (orderItem) => {
@@ -76,13 +87,22 @@ router.post("/", async (req, res) => {
     })
   );
 
-  const totalPrice = totalPrices.reduce((a, b) => a + b, 0);
+  const cupon = await CuponModel.findOne({ name: req.body.cuponValue });
+
+  // if (!cupon) {
+  //   res.send("Invalid Cupon");
+  // }
+
+  const cuponHandler = cupon ? cupon.val : 0;
+
+  const totalPrice = totalPrices.reduce((a, b) => a + b, -cuponHandler);
 
   const token = req.header("authorization").substring(7);
   const decodedToken = jwt.decode(token, { complete: true });
   const userId = decodedToken.payload.userId;
 
   let order = new OrderModel({
+    cuponValue: req.body.cuponValue,
     orderItems: orderItemsIds,
     status: req.body.status,
     totalPrice: totalPrice,

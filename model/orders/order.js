@@ -32,6 +32,9 @@ const orderSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  cuponNum: {
+    type: String,
+  },
 });
 
 orderSchema.virtual("id").get(function () {

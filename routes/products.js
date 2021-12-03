@@ -169,4 +169,30 @@ router.put("/:vendorId/:prodId", async (req, res) => {
   }
 });
 
+// Add To Fav
+// router.put("/addToFav/:prodId/:userId", async (req, res) => {
+//   const prods = await prodModel.findById(req.params.prodId);
+//   const User = await UserModel.findById(req.params.userId).populate("favs");
+
+//   const favs = () => {
+//     if (User.favs.some((Product) => Product._id == req.params.prodId)) {
+//       return User.favs;
+//     }
+
+//     return [...User.favs, prods._id];
+//   };
+
+//   const favArr = favs();
+
+//   const updatedUser = await UserModel.findByIdAndUpdate(
+//     req.params.userId,
+//     {
+//       favs: favArr,
+//     },
+//     { new: true }
+//   ).populate("favs");
+
+//   res.send(updatedUser);
+// });
+
 module.exports = router;
