@@ -33,12 +33,18 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
-  // favProducts: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "favProducts",
-  //   },
-  // ],
+  addressess: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Address",
+    },
+  ],
+  favs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
 });
 
 userSchema.virtual("id").get(function () {

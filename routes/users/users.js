@@ -3,11 +3,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const { UserModel } = require("../../model/user");
+const { ProductModel } = require("../../model/product");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const userList = await UserModel.find();
+  const userList = await UserModel.find().populate(["addressess", "favs"]);
   if (!userList) {
     res.send("No Users");
   }
@@ -55,6 +56,36 @@ router.post("/login", async (req, res) => {
   } else {
     return res.status(400).send("Password is wrong");
   }
+});
+
+router.put("/addToFav/:prodId", async (req, res) => {
+  const token = req.header("authorization").substring(7);
+  const decodedToken = jwt.decode(token, { complete: true });
+  const userId = decodedToken.payload.userId;
+  console.log(userId);
+
+  const products = await ProductModel.findById(req.params.prodId);
+  const User = await UserModel.findById(userId).populate("favs");
+
+  const favs = () => {
+    if (User.favs.some((Product) => Product._id == req.params.prodId)) {
+      return User.favs;
+    }
+
+    return [...User.favs, products._id];
+  };
+
+  const favArr = favs();
+
+  const updatedUser = await UserModel.findByIdAndUpdate(
+    userId,
+    {
+      favs: favArr,
+    },
+    { new: true }
+  ).populate("favs");
+
+  res.send(updatedUser);
 });
 
 module.exports = router;

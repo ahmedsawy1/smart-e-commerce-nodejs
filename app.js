@@ -4,6 +4,7 @@ const testRouter = require("./routes/test");
 const catgsRouter = require("./routes/catgs");
 const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users/users");
+const addressRouter = require("./routes/users/addresses");
 const resetPassword = require("./routes/users/user-reset-password");
 const ordersRouter = require("./routes/orders/orders");
 const shipingRouter = require("./routes/orders/shiping");
@@ -31,6 +32,7 @@ app.use(`${api}/products`, productsRouter);
 app.use(`${api}/orders`, ordersRouter);
 app.use(`${api}/shiping`, shipingRouter);
 app.use(`${api}/payment`, paymentRouter);
+app.use(`${api}/address`, addressRouter);
 
 mongoose
   .connect(process.env.CONNECT_STRING)
