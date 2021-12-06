@@ -1,5 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const i18Next = require("i18next");
+const backend = require("i18next-fs-backend");
+const middleware = require("i18next-http-middleware");
+
 const testRouter = require("./routes/test");
 const catgsRouter = require("./routes/catgs");
 const productsRouter = require("./routes/products");
@@ -22,8 +26,19 @@ app.get(`${api}/`, async (req, res) => {
   console.log(process.env.API);
 });
 
+i18Next
+  .use(backend)
+  .use(middleware.LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    backend: {
+      loadPath: "locales/{{lng}}/translation.json",
+    },
+  });
 app.use(express.json());
 app.use(auth());
+app.use(middleware.handle(i18Next));
+
 app.use(`${api}/test`, testRouter);
 app.use(`${api}/users`, usersRouter);
 app.use(`${api}/users`, resetPassword);
