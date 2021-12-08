@@ -28,7 +28,6 @@ router.put("/edit/password", async (req, res) => {
   const decodedToken = jwt.decode(token, { complete: true });
   const userId = decodedToken.payload.userId;
   const user = await UserModel.findById(userId);
-  //   v1@gmail
   if (user && bcrypt.compareSync(req.body.oldPassword, user.passwordHash)) {
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
