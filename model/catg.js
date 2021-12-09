@@ -6,6 +6,10 @@ const catgSchema = mongoose.Schema({
     type: String,
     default: "#18F385",
   },
+  image: {
+    type: String,
+    default: "",
+  },
 });
 
 catgSchema.virtual("id").get(function () {
