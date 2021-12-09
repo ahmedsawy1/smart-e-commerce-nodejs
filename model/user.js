@@ -29,10 +29,6 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
-  city: {
-    type: String,
-    default: "",
-  },
   addressess: [
     {
       type: mongoose.Schema.Types.ObjectId,

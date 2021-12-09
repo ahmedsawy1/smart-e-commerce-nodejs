@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
       },
       process.env.SECRET,
       {
-        expiresIn: "1d", // >> on day
+        expiresIn: "50d", // >> on day
       }
     );
     res.status(200).send({
