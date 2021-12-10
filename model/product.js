@@ -21,7 +21,7 @@ const productSchema = mongoose.Schema({
   },
   oldPrice: {
     type: Number,
-    required: true,
+    // required: true,
   },
   size: {
     type: String,
@@ -62,6 +62,15 @@ const productSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  image: {
+    type: String,
+    default: "",
+  },
+  images: [
+    {
+      type: String,
+    },
+  ],
 });
 
 productSchema.virtual("id").get(function () {
