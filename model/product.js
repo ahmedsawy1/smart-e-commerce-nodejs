@@ -71,6 +71,10 @@ const productSchema = mongoose.Schema({
       type: String,
     },
   ],
+  views: {
+    type: Number,
+    default: 0,
+  },
 });
 
 productSchema.virtual("id").get(function () {

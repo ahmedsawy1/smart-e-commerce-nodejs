@@ -53,7 +53,17 @@ router.get("/:id", async (req, res) => {
     res.send("No Product Found");
     return;
   }
-  res.send(product);
+
+  const updatedViews = await ProductModel.findByIdAndUpdate(
+    product._id,
+    {
+      views: product.views + 1,
+    },
+    {
+      new: true,
+    }
+  );
+  res.send(updatedViews);
 });
 
 // router.get("/recentlyAdded", async (req, res) => {
@@ -146,15 +156,26 @@ const storage = multer.diskStorage({
 
 const uploadOptions = multer({ storage: storage });
 
-router.post("/:vendorId", uploadOptions.single("image"), async (req, res) => {
+router.post("/:vendorId", uploadOptions.array("images"), async (req, res) => {
   const foundedCatg = await Catg.findOne({ name: req.body.catg });
   const vendor = await UserModel.findById(req.params.vendorId);
 
-  const file = req.file;
-  if (!file) return res.status(400).send("No image in the request");
+  // const file = req.file;
+  // if (!file) return res.status(400).send("No image in the request");
 
-  const fileName = file.filename;
+  const files = req.files;
+
+  let imagesPaths = [];
   const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+
+  if (files) {
+    files.map((file) => {
+      imagesPaths.push(`${basePath}${file.filename}`);
+    });
+  }
+
+  // const fileName = file.filename;
+  // const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
 
   let newProduct = new ProductModel({
     name: req.body.name,
@@ -166,7 +187,8 @@ router.post("/:vendorId", uploadOptions.single("image"), async (req, res) => {
     countInStock: req.body.countInStock,
     brand: req.body.brand,
     isFeatured: req.body.isFeatured,
-    image: `${basePath}${fileName}`, // "http://localhost:3000/public/upload/image-2323232"
+    // image: `${basePath}${fileName}`, // "http://localhost:3000/public/upload/image-2323232"
+    images: imagesPaths,
 
     // sold: req.body.sold, // to delete it was just for testing
   });
@@ -203,12 +225,12 @@ router.put("/:vendorId/:prodId", async (req, res) => {
 });
 
 router.put(
-  "/gallery-images/:id",
+  "/gallery/:id",
   uploadOptions.array("images", 10),
   async (req, res) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-      return res.status(400).send("Invalid Product Id");
-    }
+    // if (!mongoose.isValidObjectId(req.params.id)) {
+    //   return res.status(400).send("Invalid Product Id");
+    // }
 
     const files = req.files;
     let imagesPaths = [];
