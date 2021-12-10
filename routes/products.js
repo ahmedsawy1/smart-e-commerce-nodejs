@@ -225,7 +225,7 @@ router.put("/:vendorId/:prodId", async (req, res) => {
 });
 
 router.put(
-  "/gallery/:id",
+  "/gallery/:prodId",
   uploadOptions.array("images", 10),
   async (req, res) => {
     // if (!mongoose.isValidObjectId(req.params.id)) {
@@ -243,7 +243,7 @@ router.put(
     }
 
     const product = await ProductModel.findByIdAndUpdate(
-      req.params.id,
+      req.params.prodId,
       {
         images: imagesPaths,
       },
