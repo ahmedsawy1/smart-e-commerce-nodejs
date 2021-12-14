@@ -41,6 +41,8 @@ app.use(auth());
 app.use(middleware.handle(i18Next));
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
+//     const token = req.headers.authorization.split(' ')[1];
+
 app.use(`${api}/test`, testRouter);
 app.use(`${api}/users`, usersRouter);
 app.use(`${api}/users`, resetPassword);
