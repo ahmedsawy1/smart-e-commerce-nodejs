@@ -16,7 +16,7 @@ const addressRouter = require("./routes/users/addresses");
 // const shipingRouter = require("./routes/orders/shiping");
 // const paymentRouter = require("./routes/orders/payment");
 
-// const auth = require("./helpers/jwt");
+const auth = require("./helpers/jwt");
 
 const app = express();
 const api = process.env.API;
@@ -32,9 +32,9 @@ i18Next
     },
   });
 app.use(express.json());
-// app.use(auth());
+app.use(auth());
 app.use(middleware.handle(i18Next));
-// app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 //     const token = req.headers.authorization.split(' ')[1];
 
