@@ -20,7 +20,7 @@ require("dotenv/config");
 
 const app = express();
 const api = process.env.API;
-const port = 3000;
+// const port = 3000;
 
 app.get(`/api/v1/`, async (req, res) => {
   res.send("Hello");
