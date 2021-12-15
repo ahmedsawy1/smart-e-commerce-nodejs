@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
       token: token,
     });
   } else {
-    return res.status(400).send("Password is wrong");
+    return res.status(400).send(t("Password is Wrong"));
   }
 });
 

@@ -39,7 +39,7 @@ router.put("/edit/password", async (req, res) => {
 
     res.send(updatedUser);
   } else {
-    res.send("Password Is Not Correct");
+    res.send(req.t("Password is Wrong"));
   }
 });
 
