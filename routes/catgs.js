@@ -10,9 +10,9 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const catgsList = await Catg.find();
 
-  // if (!catgsList) {
-  //   return res.send("No Catgs");
-  // }
+  if (!catgsList) {
+    return res.send("No Catgs");
+  }
 
   res.send(catgsList);
 });
