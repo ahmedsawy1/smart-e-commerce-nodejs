@@ -21,9 +21,9 @@ router.get("/", async (req, res) => {
   if (req.query.sortType === "bestSeller") {
     prodList = prodList?.sort((a, b) => b.sold - a.sold);
   }
-  // if (req.query.sortType === "isFeatured") {
-  //   prodList = prodList?.filter((item) => item.isFeatured === true);
-  // }
+  if (req.query.sortType === "isFeatured") {
+    prodList = prodList?.filter((item) => item.isFeatured === true);
+  }
 
   res.send(prodList);
 });
