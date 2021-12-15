@@ -75,10 +75,10 @@ router.get("/catgProducts", async (req, res) => {
   const filterd = products.filter((prod) => prod.catg.name === catgData.name);
 
   if (!catgData) {
-    return res.send("No products in this catg");
+    return res.send("No catg");
   }
   if (!products) {
-    return res.send("No products in this catg");
+    return res.send("No products");
   }
 
   res.send(filterd);
