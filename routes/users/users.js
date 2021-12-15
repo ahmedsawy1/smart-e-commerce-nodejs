@@ -59,34 +59,34 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.put("/addToFav/:prodId", async (req, res) => {
-//   const token = req.header("authorization").substring(7);
-//   const decodedToken = jwt.decode(token, { complete: true });
-//   const userId = decodedToken.payload.userId;
-//   console.log(userId);
+router.put("/addToFav/:prodId", async (req, res) => {
+  const token = req.header("authorization").substring(7);
+  const decodedToken = jwt.decode(token, { complete: true });
+  const userId = decodedToken.payload.userId;
+  console.log(userId);
 
-//   const products = await ProductModel.findById(req.params.prodId);
-//   const User = await UserModel.findById(userId).populate("favs");
+  const products = await ProductModel.findById(req.params.prodId);
+  const User = await UserModel.findById(userId).populate("favs");
 
-//   const favs = () => {
-//     if (User.favs.some((Product) => Product._id == req.params.prodId)) {
-//       return User.favs;
-//     }
+  const favs = () => {
+    if (User.favs.some((Product) => Product._id == req.params.prodId)) {
+      return User.favs;
+    }
 
-//     return [...User.favs, products._id];
-//   };
+    return [...User.favs, products._id];
+  };
 
-//   const favArr = favs();
+  const favArr = favs();
 
-//   const updatedUser = await UserModel.findByIdAndUpdate(
-//     userId,
-//     {
-//       favs: favArr,
-//     },
-//     { new: true }
-//   ).populate("favs");
+  const updatedUser = await UserModel.findByIdAndUpdate(
+    userId,
+    {
+      favs: favArr,
+    },
+    { new: true }
+  ).populate("favs");
 
-//   res.send(updatedUser);
-// });
+  res.send(updatedUser);
+});
 
 module.exports = router;
