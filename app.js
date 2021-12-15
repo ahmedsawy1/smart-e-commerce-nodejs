@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // const i18Next = require("i18next");
 // const backend = require("i18next-fs-backend");
 // const middleware = require("i18next-http-middleware");
+require("dotenv/config");
 
 const testRouter = require("./routes/test");
 // const catgsRouter = require("./routes/catgs");
@@ -16,7 +17,6 @@ const testRouter = require("./routes/test");
 // const paymentRouter = require("./routes/orders/payment");
 
 // const auth = require("./helpers/jwt");
-require("dotenv/config");
 
 const app = express();
 const api = process.env.API;

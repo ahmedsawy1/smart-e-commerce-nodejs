@@ -9,7 +9,13 @@ router.post("/", async (req, res) => {
   });
 
   newTest = await newTest.save();
-  res.send(req.t("test"));
+  res.send(newTest);
+});
+
+router.get("/", async (req, res) => {
+  let tests = await Test.find();
+
+  res.send(tests);
 });
 
 module.exports = router;
