@@ -7,6 +7,16 @@ const multer = require("multer");
 
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  const catgsList = await Catg.find();
+
+  if (!catgsList) {
+    return res.send("No Catgs");
+  }
+
+  res.send(catgsList);
+});
+
 const FILE_TYPE_MAP = {
   "image/png": "png",
   "image/jpeg": "jpeg",
@@ -31,12 +41,6 @@ const storage = multer.diskStorage({
 });
 
 const uploadOptions = multer({ storage: storage });
-
-router.get("/", async (req, res) => {
-  const catgsList = await Catg.find();
-
-  res.send(catgsList);
-});
 
 router.post("/", uploadOptions.single("image"), async (req, res) => {
   const token = req.header("authorization").substring(7);
