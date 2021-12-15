@@ -1,6 +1,8 @@
 {
   "test": "welcome to english",
   "AddedToFav":"The product has been added to your favourites",
-  "Admin Only Can Add Catgs" :"Admin Only Can Add Categories"
+  "Admin Only Can Add Catgs" :"Admin Only Can Add Categories",
+  "Password is Wrong":"Password is Wrong"
+
 
 }
