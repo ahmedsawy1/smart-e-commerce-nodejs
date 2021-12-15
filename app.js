@@ -6,9 +6,9 @@ const middleware = require("i18next-http-middleware");
 require("dotenv/config");
 
 const testRouter = require("./routes/test");
+const usersRouter = require("./routes/users/users");
 // const catgsRouter = require("./routes/catgs");
 // const productsRouter = require("./routes/products");
-// const usersRouter = require("./routes/users/users");
 // const addressRouter = require("./routes/users/addresses");
 // const updateProfile = require("./routes/users/update-profile");
 // const resetPassword = require("./routes/users/user-reset-password");
@@ -44,7 +44,7 @@ app.use(middleware.handle(i18Next));
 //     const token = req.headers.authorization.split(' ')[1];
 
 app.use(`${api}/test`, testRouter);
-// app.use(`${api}/users`, usersRouter);
+app.use(`${api}/users`, usersRouter);
 // app.use(`${api}/users`, resetPassword);
 // app.use(`${api}/users`, updateProfile);
 // app.use(`${api}/catgs`, catgsRouter);
