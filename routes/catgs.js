@@ -60,7 +60,7 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
     return res.send(newCatg);
   }
 
-  return res.send(t("Admin Only Can Add Catgs"));
+  return res.send("Admin Only Can Add Catgs");
 });
 
 // fun 61902226122ee166c1e5983e
