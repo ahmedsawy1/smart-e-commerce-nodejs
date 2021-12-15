@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   });
 
   newTest = await newTest.save();
-  res.send(newTest);
+  res.send(req.t("test") + newTest);
 });
 
 router.get("/", async (req, res) => {

@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const i18Next = require("i18next");
-// const backend = require("i18next-fs-backend");
-// const middleware = require("i18next-http-middleware");
+const i18Next = require("i18next");
+const backend = require("i18next-fs-backend");
+const middleware = require("i18next-http-middleware");
 require("dotenv/config");
 
 const testRouter = require("./routes/test");
@@ -27,18 +27,18 @@ app.get(`/api/v1/`, async (req, res) => {
   console.log(process.env.API);
 });
 
-// i18Next
-//   .use(backend)
-//   .use(middleware.LanguageDetector)
-//   .init({
-//     fallbackLng: "en",
-//     backend: {
-//       loadPath: "locales/{{lng}}/translation.json",
-//     },
-//   });
+i18Next
+  .use(backend)
+  .use(middleware.LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    backend: {
+      loadPath: "locales/{{lng}}/translation.json",
+    },
+  });
 app.use(express.json());
 // app.use(auth());
-// app.use(middleware.handle(i18Next));
+app.use(middleware.handle(i18Next));
 // app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
 
 //     const token = req.headers.authorization.split(' ')[1];
