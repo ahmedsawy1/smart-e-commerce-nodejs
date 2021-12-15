@@ -49,6 +49,10 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
   const fileName = file.filename;
   const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
 
+  if (user.role !== "admin") {
+    return res.send(t("Admin Only Can Add Catgs"));
+  }
+
   if (user.role === "admin") {
     let newCatg = new Catg({
       name: req.body.name,
@@ -59,8 +63,6 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
     newCatg = await newCatg.save();
     return res.send(newCatg);
   }
-
-  return res.send(t("Admin Only Can Add Catgs"));
 });
 
 // fun 61902226122ee166c1e5983e
