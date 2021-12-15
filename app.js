@@ -9,7 +9,7 @@ const testRouter = require("./routes/test");
 const usersRouter = require("./routes/users/users");
 // const catgsRouter = require("./routes/catgs");
 // const productsRouter = require("./routes/products");
-// const addressRouter = require("./routes/users/addresses");
+const addressRouter = require("./routes/users/addresses");
 // const updateProfile = require("./routes/users/update-profile");
 // const resetPassword = require("./routes/users/user-reset-password");
 // const ordersRouter = require("./routes/orders/orders");
@@ -47,7 +47,7 @@ app.use(`${api}/users`, usersRouter);
 // app.use(`${api}/orders`, ordersRouter);
 // app.use(`${api}/shiping`, shipingRouter);
 // app.use(`${api}/payment`, paymentRouter);
-// app.use(`${api}/address`, addressRouter);
+app.use(`${api}/address`, addressRouter);
 
 mongoose
   .connect(process.env.CONNECT_STRING)

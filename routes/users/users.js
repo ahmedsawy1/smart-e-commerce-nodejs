@@ -8,7 +8,8 @@ const { ProductModel } = require("../../model/product");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const userList = await UserModel.find().populate("favs");
+  // const userList = await UserModel.find().populate(["addressess", "favs"]);
+  const userList = await UserModel.find().populate(["favs"]);
   if (!userList) {
     res.send("No Users");
   }
