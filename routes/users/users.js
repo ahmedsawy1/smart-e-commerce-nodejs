@@ -10,8 +10,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    // const userList = await UserModel.find().populate(["addressess", "favs"]);
-    const userList = await UserModel.find();
+    const userList = await UserModel.find().populate(["addressess", "favs"]);
     if (!userList) {
       res.send("No Users");
     }
