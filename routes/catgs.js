@@ -38,30 +38,30 @@ router.get("/", async (req, res) => {
   res.send(catgsList);
 });
 
-router.post("/", uploadOptions.single("image"), async (req, res) => {
-  const token = req.header("authorization").substring(7);
-  const decodedToken = jwt.decode(token, { complete: true });
-  const user = await UserModel.findById(decodedToken.payload.userId);
+// router.post("/", uploadOptions.single("image"), async (req, res) => {
+//   const token = req.header("authorization").substring(7);
+//   const decodedToken = jwt.decode(token, { complete: true });
+//   const user = await UserModel.findById(decodedToken.payload.userId);
 
-  const file = req.file;
-  if (!file) return res.status(400).send("No image in the request");
+//   const file = req.file;
+//   if (!file) return res.status(400).send("No image in the request");
 
-  const fileName = file.filename;
-  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+//   const fileName = file.filename;
+//   const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
 
-  if (user.role === "admin") {
-    let newCatg = new Catg({
-      name: req.body.name,
-      image: `${basePath}${fileName}`, // "http://localhost:3000/public/upload/image-2323232"
-      backgroundColor: req.body.backgroundColor,
-    });
+//   if (user.role === "admin") {
+//     let newCatg = new Catg({
+//       name: req.body.name,
+//       image: `${basePath}${fileName}`, // "http://localhost:3000/public/upload/image-2323232"
+//       backgroundColor: req.body.backgroundColor,
+//     });
 
-    newCatg = await newCatg.save();
-    return res.send(newCatg);
-  }
+//     newCatg = await newCatg.save();
+//     return res.send(newCatg);
+//   }
 
-  return res.send(t("Admin Only Can Add Catgs"));
-});
+//   return res.send(t("Admin Only Can Add Catgs"));
+// });
 
 // fun 61902226122ee166c1e5983e
 
