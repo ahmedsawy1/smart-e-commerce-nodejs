@@ -78,7 +78,7 @@ router.put("/addToFav/:prodId", async (req, res) => {
 
   const favArr = favs();
 
-  const updatedUser = await UserModel.findByIdAndUpdate(
+  await UserModel.findByIdAndUpdate(
     userId,
     {
       favs: favArr,
@@ -86,7 +86,7 @@ router.put("/addToFav/:prodId", async (req, res) => {
     { new: true }
   ).populate("favs");
 
-  res.send(updatedUser);
+  res.send(req.t("AddedToFav"));
 });
 
 module.exports = router;
