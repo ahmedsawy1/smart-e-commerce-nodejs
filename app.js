@@ -20,12 +20,7 @@ const usersRouter = require("./routes/users/users");
 
 const app = express();
 const api = process.env.API;
-// const port = 3000;
-
-app.get(`/api/v1/`, async (req, res) => {
-  res.send("Hello");
-  console.log(process.env.API);
-});
+const port = 3000;
 
 i18Next
   .use(backend)
@@ -62,7 +57,7 @@ mongoose
   });
 
 // Development
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// app.listen(3000, () => console.log(`Example app listening on port ${port}!`));
 
 // Production
 var server = app.listen(process.env.PORT || 3000, function () {
