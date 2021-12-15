@@ -14,9 +14,10 @@ router.get("/", async (req, res) => {
     return;
   }
 
-  // if (req.query.sortType === "recentlyAdded") {
-  //   prodList = prodList?.sort((a, b) => b.dateCreated - a.dateCreated);
-  // }
+  if (req.query.sortType === "recentlyAdded") {
+    prodList = prodList?.sort((a, b) => b.dateCreated - a.dateCreated);
+  }
+
   // if (req.query.sortType === "bestSeller") {
   //   prodList = prodList?.sort((a, b) => b.sold - a.sold);
   // }
