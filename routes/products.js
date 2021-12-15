@@ -130,7 +130,7 @@ router.get("/filter", async (req, res) => {
   // }
 
   if (!prodList) {
-    return res.send("No Prods");
+    res.send("No Prods");
   }
 
   res.send(prodList);
