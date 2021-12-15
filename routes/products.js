@@ -106,31 +106,31 @@ router.get("/:id", async (req, res) => {
 router.get("/filter", async (req, res) => {
   let prodList = await ProductModel.find().populate("catg");
 
-  // if (req.query.catg) {
-  //   prodList = prodList.filter((prod) => prod.catg.name === req.query.catg);
-  // }
+  if (req.query.catg) {
+    prodList = prodList.filter((prod) => prod.catg.name === req.query.catg);
+  }
 
-  // if (req.query.brand) {
-  //   prodList = prodList.filter((prod) => prod.brand === req.query.brand);
-  // }
-  // if (req.query.size) {
-  //   prodList = prodList.filter((prod) => prod.size === req.query.size);
-  // }
-  // if (+req.query.countInStock) {
-  //   prodList = prodList.filter(
-  //     (prod) => prod.countInStock === +req.query.countInStock
-  //   );
-  // }
+  if (req.query.brand) {
+    prodList = prodList.filter((prod) => prod.brand === req.query.brand);
+  }
+  if (req.query.size) {
+    prodList = prodList.filter((prod) => prod.size === req.query.size);
+  }
+  if (+req.query.countInStock) {
+    prodList = prodList.filter(
+      (prod) => prod.countInStock === +req.query.countInStock
+    );
+  }
 
-  // if (+req.query.startPrice && +req.query.endPrice) {
-  //   prodList = prodList.filter(
-  //     (prod) =>
-  //       prod.price >= +req.query.startPrice && prod.price <= +req.query.endPrice
-  //   );
-  // }
+  if (+req.query.startPrice && +req.query.endPrice) {
+    prodList = prodList.filter(
+      (prod) =>
+        prod.price >= +req.query.startPrice && prod.price <= +req.query.endPrice
+    );
+  }
 
   if (!prodList) {
-    res.send("No Prods");
+    return res.send("No Prods");
   }
 
   res.send(prodList);
@@ -260,31 +260,5 @@ router.put(
     res.send(product);
   }
 );
-
-// Add To Fav
-// router.put("/addToFav/:prodId/:userId", async (req, res) => {
-//   const prods = await prodModel.findById(req.params.prodId);
-//   const User = await UserModel.findById(req.params.userId).populate("favs");
-
-//   const favs = () => {
-//     if (User.favs.some((Product) => Product._id == req.params.prodId)) {
-//       return User.favs;
-//     }
-
-//     return [...User.favs, prods._id];
-//   };
-
-//   const favArr = favs();
-
-//   const updatedUser = await UserModel.findByIdAndUpdate(
-//     req.params.userId,
-//     {
-//       favs: favArr,
-//     },
-//     { new: true }
-//   ).populate("favs");
-
-//   res.send(updatedUser);
-// });
 
 module.exports = router;
