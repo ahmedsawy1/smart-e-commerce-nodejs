@@ -65,12 +65,12 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
 
 // fun 61902226122ee166c1e5983e
 
-router.get("/catgProducts", async (req, res) => {
-  const catgData = await Catg.findOne({ name: req.query.catgName });
-  const products = await ProductModel.find().populate("catg");
-  const filterd = products.filter((prod) => prod.catg.name === catgData.name);
+// router.get("/catgProducts", async (req, res) => {
+//   const catgData = await Catg.findOne({ name: req.query.catgName });
+//   const products = await ProductModel.find().populate("catg");
+//   const filterd = products.filter((prod) => prod.catg.name === catgData.name);
 
-  res.send(filterd);
-});
+//   res.send(filterd);
+// });
 
 module.exports = router;
