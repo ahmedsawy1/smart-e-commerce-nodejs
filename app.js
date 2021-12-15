@@ -7,7 +7,7 @@ require("dotenv/config");
 
 const testRouter = require("./routes/test");
 const usersRouter = require("./routes/users/users");
-// const catgsRouter = require("./routes/catgs");
+const catgsRouter = require("./routes/catgs");
 // const productsRouter = require("./routes/products");
 const addressRouter = require("./routes/users/addresses");
 // const updateProfile = require("./routes/users/update-profile");
@@ -42,7 +42,7 @@ app.use(`${api}/test`, testRouter);
 app.use(`${api}/users`, usersRouter);
 // app.use(`${api}/users`, resetPassword);
 // app.use(`${api}/users`, updateProfile);
-// app.use(`${api}/catgs`, catgsRouter);
+app.use(`${api}/catgs`, catgsRouter);
 // app.use(`${api}/products`, productsRouter);
 // app.use(`${api}/orders`, ordersRouter);
 // app.use(`${api}/shiping`, shipingRouter);
