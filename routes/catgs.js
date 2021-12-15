@@ -74,6 +74,10 @@ router.get("/catgProducts", async (req, res) => {
   const products = await ProductModel.find().populate("catg");
   const filterd = products.filter((prod) => prod.catg.name === catgData.name);
 
+  if (!filterd) {
+    return res.send("No products in this catg");
+  }
+
   res.send(filterd);
 });
 
