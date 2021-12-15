@@ -33,31 +33,31 @@ router.post("/register", async (req, res) => {
   res.send(newUser);
 });
 
-// router.post("/login", async (req, res) => {
-//   const user = await UserModel.findOne({ email: req.body.email });
-//   if (!user) {
-//     return res.status(400).send("User Is Not Found");
-//   }
+router.post("/login", async (req, res) => {
+  const user = await UserModel.findOne({ email: req.body.email });
+  if (!user) {
+    return res.status(400).send("User Is Not Found");
+  }
 
-//   if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
-//     const token = jwt.sign(
-//       {
-//         userId: user.id,
-//         isAdmin: user.isAdmin,
-//       },
-//       process.env.SECRET,
-//       {
-//         expiresIn: "50d", // >> on day
-//       }
-//     );
-//     res.status(200).send({
-//       user: user.email,
-//       token: token,
-//     });
-//   } else {
-//     return res.status(400).send("Password is wrong");
-//   }
-// });
+  if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        isAdmin: user.isAdmin,
+      },
+      process.env.SECRET,
+      {
+        expiresIn: "50d", // >> on day
+      }
+    );
+    res.status(200).send({
+      user: user.email,
+      token: token,
+    });
+  } else {
+    return res.status(400).send("Password is wrong");
+  }
+});
 
 // router.put("/addToFav/:prodId", async (req, res) => {
 //   const token = req.header("authorization").substring(7);
