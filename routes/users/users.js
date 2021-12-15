@@ -16,22 +16,22 @@ router.get("/", async (req, res) => {
   res.send(userList);
 });
 
-// router.post("/register", async (req, res) => {
-//   let newUser = new UserModel({
-//     name: req.body.name,
-//     email: req.body.email,
-//     phone: req.body.phone,
-//     passwordHash: bcrypt.hashSync(req.body.password, 10),
-//     country: req.body.country,
-//     city: req.body.city,
-//   });
+router.post("/register", async (req, res) => {
+  let newUser = new UserModel({
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    passwordHash: bcrypt.hashSync(req.body.password, 10),
+    country: req.body.country,
+    city: req.body.city,
+  });
 
-//   newUser = await newUser.save();
+  newUser = await newUser.save();
 
-//   if (!newUser) return res.status(400).send("The user cannot be created!");
+  if (!newUser) return res.status(400).send("The user cannot be created!");
 
-//   res.send(newUser);
-// });
+  res.send(newUser);
+});
 
 // router.post("/login", async (req, res) => {
 //   const user = await UserModel.findOne({ email: req.body.email });
