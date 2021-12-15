@@ -106,28 +106,28 @@ router.get("/:id", async (req, res) => {
 router.get("/filter", async (req, res) => {
   let prodList = await ProductModel.find().populate("catg");
 
-  if (req.query.catg) {
-    prodList = prodList.filter((prod) => prod.catg.name === req.query.catg);
-  }
+  // if (req.query.catg) {
+  //   prodList = prodList.filter((prod) => prod.catg.name === req.query.catg);
+  // }
 
-  if (req.query.brand) {
-    prodList = prodList.filter((prod) => prod.brand === req.query.brand);
-  }
-  if (req.query.size) {
-    prodList = prodList.filter((prod) => prod.size === req.query.size);
-  }
-  if (+req.query.countInStock) {
-    prodList = prodList.filter(
-      (prod) => prod.countInStock === +req.query.countInStock
-    );
-  }
+  // if (req.query.brand) {
+  //   prodList = prodList.filter((prod) => prod.brand === req.query.brand);
+  // }
+  // if (req.query.size) {
+  //   prodList = prodList.filter((prod) => prod.size === req.query.size);
+  // }
+  // if (+req.query.countInStock) {
+  //   prodList = prodList.filter(
+  //     (prod) => prod.countInStock === +req.query.countInStock
+  //   );
+  // }
 
-  if (+req.query.startPrice && +req.query.endPrice) {
-    prodList = prodList.filter(
-      (prod) =>
-        prod.price >= +req.query.startPrice && prod.price <= +req.query.endPrice
-    );
-  }
+  // if (+req.query.startPrice && +req.query.endPrice) {
+  //   prodList = prodList.filter(
+  //     (prod) =>
+  //       prod.price >= +req.query.startPrice && prod.price <= +req.query.endPrice
+  //   );
+  // }
 
   if (!prodList) {
     return res.send("No Prods");
