@@ -4,15 +4,20 @@ const jwt = require("jsonwebtoken");
 
 const { UserModel } = require("../../model/user");
 const { ProductModel } = require("../../model/product");
+const res = require("express/lib/response");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const userList = await UserModel.find().populate(["addressess", "favs"]);
-  if (!userList) {
-    res.send("No Users");
+  try {
+    const userList = await UserModel.find().populate(["addressess", "favs"]);
+    if (!userList) {
+      res.send("No Users");
+    }
+    res.send(userList);
+  } catch (error) {
+    res.send(error);
   }
-  res.send(userList);
 });
 
 // router.post("/register", async (req, res) => {
