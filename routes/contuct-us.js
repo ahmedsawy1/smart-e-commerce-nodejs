@@ -5,7 +5,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const messagesList = await ContactUsModel.find();
   if (!messagesList) {
-    res.send("No Messagess");
+    res.send({ message: "No Messagess" });
   }
   res.send(messagesList);
 });

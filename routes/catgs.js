@@ -64,7 +64,7 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
     return res.send(newCatg);
   }
 
-  return res.send("Admin Only Can Add Catgs");
+  return res.send({ message: "Admin Only Can Add Catgs" });
 });
 
 // fun 61902226122ee166c1e5983e
@@ -75,10 +75,10 @@ router.get("/catgProducts", async (req, res) => {
   const filterd = products.filter((prod) => prod.catg.name === catgData.name);
 
   if (!catgData) {
-    return res.send("No catg");
+    return res.send({ message: "No catg" });
   }
   if (!products) {
-    return res.send("No products");
+    return res.send({ message: "No products" });
   }
 
   res.send(filterd);

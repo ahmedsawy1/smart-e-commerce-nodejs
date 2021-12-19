@@ -7,7 +7,7 @@ const { UserModel } = require("../../model/user");
 router.get("/", async (req, res) => {
   const addressessList = await AddressModel.find();
   if (!addressessList) {
-    res.send("No addressessList");
+    res.send({ message: "No addressessList" });
   }
   res.send(addressessList);
 });
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 router.delete("/", async (req, res) => {
   await AddressModel.remove();
 
-  res.send("deleted");
+  res.send({ message: "deleted" });
 });
 
 router.post("/", async (req, res) => {
