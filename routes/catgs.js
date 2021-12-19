@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   const catgsList = await Catg.find();
 
   if (!catgsList) {
-    return res.send("No Catgs");
+    return res.send({ message: "No Catgs" });
   }
 
   res.send(catgsList);

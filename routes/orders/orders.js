@@ -90,7 +90,7 @@ router.post("/", async (req, res) => {
   const cupon = await CuponModel.findOne({ name: req.body.cuponValue });
 
   // if (!cupon) {
-  //   res.send("Invalid Cupon");
+  //   res.send({message:"Invalid Cupon"});
   // }
 
   const cuponHandler = cupon ? cupon.val : 0;

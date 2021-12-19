@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   let prodList = await ProductModel.find().populate("catg");
   if (!prodList) {
-    res.send("No Products Found");
+    res.send({ message: "No Products Found" });
     return;
   }
 
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
 router.get("/search", async (req, res) => {
   let searchedProds = await ProductModel.find().populate("catg");
   if (!searchedProds) {
-    res.send("No Products Found");
+    res.send({ message: "No Products Found" });
     return;
   }
 
@@ -51,7 +51,7 @@ router.get("/search", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const product = await ProductModel.findById(req.params.id);
   if (!product) {
-    res.send("No Product Found");
+    res.send({ message: "No Product Found" });
     return;
   }
 
@@ -130,7 +130,7 @@ router.get("/filter", async (req, res) => {
   }
 
   if (!prodList) {
-    return res.send("No Prods");
+    return res.send({ message: "No Prods" });
   }
 
   res.send(prodList);
@@ -225,7 +225,7 @@ router.put("/:vendorId/:prodId", async (req, res) => {
 
     res.send(updatedProduct);
   } else if (vendor.id !== foundedProduct.belongTo.toString()) {
-    res.send("That vendor doesn't have that product");
+    res.send({ message: "That vendor doesn't have that product" });
   }
 });
 

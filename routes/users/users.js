@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const userList = await UserModel.find().populate(["addressess", "favs"]);
   if (!userList) {
-    res.send("No Users");
+    res.send({ message: "No Users" });
   }
   res.send(userList);
 });
@@ -85,7 +85,7 @@ router.put("/addToFav/:prodId", async (req, res) => {
     { new: true }
   ).populate("favs");
 
-  res.send(req.t("AddedToFav"));
+  res.send({ message: req.t("AddedToFav") });
 });
 
 module.exports = router;

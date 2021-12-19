@@ -7,19 +7,19 @@ const router = express.Router();
 router.post("/forget-password", async (req, res) => {
   const userData = await UserModel.findOne({ email: req.body.email });
   if (!userData) {
-    res.send("No User Is Registered With That Email");
+    res.send({ message: "No User Is Registered With That Email" });
     return;
   }
 
   const link = `http://localhost:3000/api/v1/users/reset-password/${userData._id}`;
   console.log(link);
-  res.send("Password Reset Link Was Sent Succsessfuly");
+  res.send({ message: "Password Reset Link Was Sent Succsessfuly" });
 });
 
 router.get("/reset-password/:id", async (req, res) => {
   const UserData = await UserModel.findById(req.params.id);
   if (!UserData) {
-    res.send("No User");
+    res.send({ message: "No User" });
     return;
   }
   res.send(UserData);
@@ -34,10 +34,10 @@ router.put("/reset-password/:id", async (req, res) => {
     { new: true }
   );
   if (!updatedUser) {
-    res.send("No User");
+    res.send({ message: "No User" });
     return;
   }
-  res.send("Password Updated Succesfully");
+  res.send({ message: "Password Updated Succesfully" });
 });
 
 module.exports = router;
