@@ -44,13 +44,3 @@ addressSchema.set("toJSON", {
 });
 
 exports.AddressModel = mongoose.model("Address", addressSchema);
-
-// {"name":"bagalat",
-//  "phone":"123456",
-//  "Country": "bagalat",
-//   "Governorate": "bagalat",
-//   "City": "bagalat",
-//   "zip": "123456",
-//   "Street": "bagalat",
-//   "BuildingName": "bagalat"
-// }

@@ -67,8 +67,6 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
   return res.send({ message: "Admin Only Can Add Catgs" });
 });
 
-// fun 61902226122ee166c1e5983e
-
 router.get("/catgProducts", async (req, res) => {
   const catgData = await Catg.findOne({ name: req.query.catgName });
   const products = await ProductModel.find().populate("catg");

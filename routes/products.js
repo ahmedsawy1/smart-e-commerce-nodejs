@@ -67,42 +67,6 @@ router.get("/:id", async (req, res) => {
   res.send(updatedViews);
 });
 
-// router.get("/recentlyAdded", async (req, res) => {
-//   const prodList = await ProductModel.find().populate("catg");
-
-//   if (!prodList) {
-//     res.send("No Products Yes");
-//     return;
-//   }
-
-//   const recAdded = prodList?.sort((a, b) => b.dateCreated - a.dateCreated);
-//   res.send(recAdded);
-// });
-
-// router.get("/bestSeller", async (req, res) => {
-//   const prodList = await ProductModel.find().populate("catg");
-
-//   if (!prodList) {
-//     res.send("No Products Yes");
-//     return;
-//   }
-
-//   const bestSellerProds = prodList?.sort((a, b) => b.sold - a.sold);
-//   res.send(bestSellerProds);
-// });
-
-// router.get("/isFeatured", async (req, res) => {
-//   const prodList = await ProductModel.find().populate("catg");
-
-//   if (!prodList) {
-//     res.send("No Products Yes");
-//     return;
-//   }
-
-//   const isFeaturedProds = prodList?.filter((item) => item.isFeatured === true);
-//   res.send(isFeaturedProds);
-// });
-
 router.get("/filter", async (req, res) => {
   let prodList = await ProductModel.find().populate("catg");
 
