@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   let tests = await Test.find();
 
-  res.send(tests);
+  res.status(200).send(tests);
 });
 
 module.exports = router;

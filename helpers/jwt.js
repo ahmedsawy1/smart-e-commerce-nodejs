@@ -9,6 +9,7 @@ function auth() {
   }).unless({
     path: [
       `${api}/users/login`,
+      `${api}/users/register`,
       `${api}/users/forget-password`,
       /\/api\/v1\/users\/reset-password(.*)/,
       { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
